@@ -5,14 +5,13 @@ go 1.22.4
 toolchain go1.23.2
 
 require (
-	github.com/cohere-ai/cohere-go v0.2.0
 	github.com/go-errors/errors v1.4.2
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/uuid v1.6.0
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/nats-io/nats.go v1.36.0
-	github.com/opengovern/og-describer-cohereai v0.3.1
-	github.com/opengovern/og-util v1.5.1
+	github.com/opengovern/og-util v1.7.2
+	github.com/opengovern/resilient-bridge v0.0.0-20250115022927-47122e0b1deb
 	github.com/spf13/cobra v1.7.0
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.10.4
 	go.uber.org/zap v1.27.0
@@ -52,7 +51,7 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/labstack/echo/v4 v4.12.0 // indirect
 	github.com/turbot/go-kit v0.10.0-rc.0 // indirect
-	golang.org/x/time v0.5.0
+	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 )
@@ -68,11 +67,9 @@ require (
 	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/cohere-ai/tokenizer v1.1.2 // indirect
 	github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dgraph-io/ristretto v0.1.1 // indirect
-	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/eko/gocache/lib/v4 v4.1.5 // indirect
 	github.com/eko/gocache/store/bigcache/v4 v4.2.1 // indirect
