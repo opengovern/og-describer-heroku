@@ -3,3 +3,5 @@
 // Implement types for each resource
 
 package model
+
+type Metadata struct{}
