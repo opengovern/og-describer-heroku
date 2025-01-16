@@ -13,7 +13,7 @@ import (
 )
 
 // DescribeListByHeroku A wrapper to pass Heroku authorization to describer functions
-func DescribeListByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, *model.StreamSender) ([]model.Resource, error)) model.ResourceDescriber {
+func DescribeListByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, *model.StreamSender) ([]model.Resource, error)) model.ResourceDescriber {
 	return func(ctx context.Context, cfg configs.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, stream *model.StreamSender) ([]model.Resource, error) {
 		ctx = describer.WithTriggerType(ctx, triggerType)
 
@@ -37,9 +37,10 @@ func DescribeListByHeroku(describe func(context.Context, *resilientbridge.Resili
 			BaseBackoff:         200 * time.Millisecond,
 		})
 
+		appName := additionalParameters["AppName"]
 		// Get values from describer
 		var values []model.Resource
-		result, err := describe(ctx, resilientBridge, stream)
+		result, err := describe(ctx, resilientBridge, appName, stream)
 		if err != nil {
 			return nil, err
 		}
@@ -49,7 +50,7 @@ func DescribeListByHeroku(describe func(context.Context, *resilientbridge.Resili
 }
 
 // DescribeSingleByHeroku A wrapper to pass Heroku authorization to describer functions
-func DescribeSingleByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string) (*model.Resource, error)) model.SingleResourceDescriber {
+func DescribeSingleByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, string) (*model.Resource, error)) model.SingleResourceDescriber {
 	return func(ctx context.Context, cfg configs.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, resourceID string) (*model.Resource, error) {
 		ctx = describer.WithTriggerType(ctx, triggerType)
 
@@ -73,8 +74,9 @@ func DescribeSingleByHeroku(describe func(context.Context, *resilientbridge.Resi
 			BaseBackoff:         200 * time.Millisecond,
 		})
 
+		appName := additionalParameters["AppName"]
 		// Get value from describer
-		value, err := describe(ctx, resilientBridge, resourceID)
+		value, err := describe(ctx, resilientBridge, appName, resourceID)
 		if err != nil {
 			return nil, err
 		}

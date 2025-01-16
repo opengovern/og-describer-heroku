@@ -179,3 +179,204 @@ type AppDescription struct {
 	UpdatedAt             time.Time
 	WebURL                *string
 }
+
+type BuildpackJSON struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
+}
+
+type Buildpack struct {
+	Name string
+	URL  string
+}
+
+type ReleaseJSON struct {
+	ID string `json:"id"`
+}
+
+type Release struct {
+	ID string
+}
+
+type SlugJSON struct {
+	ID string `json:"id"`
+}
+
+type Slug struct {
+	ID string
+}
+
+type SourceBlobJSON struct {
+	Checksum           *string `json:"checksum"`
+	URL                string  `json:"url"`
+	Version            *string `json:"version"`
+	VersionDescription *string `json:"version_description"`
+}
+
+type SourceBlob struct {
+	Checksum           *string
+	URL                string
+	Version            *string
+	VersionDescription *string
+}
+
+type UserJSON struct {
+	Email string `json:"email"`
+	ID    string `json:"id"`
+}
+
+type User struct {
+	Email string
+	ID    string
+}
+
+type BuildJSON struct {
+	AppID           string           `json:"app_id"`
+	Buildpacks      *[]BuildpackJSON `json:"buildpacks"`
+	CreatedAt       time.Time        `json:"created_at"`
+	ID              string           `json:"id"`
+	OutputStreamURL string           `json:"output_stream_url"`
+	Release         *ReleaseJSON     `json:"release"`
+	Slug            *SlugJSON        `json:"slug"`
+	SourceBlob      SourceBlobJSON   `json:"source_blob"`
+	Stack           string           `json:"stack"`
+	Status          string           `json:"status"`
+	UpdatedAt       time.Time        `json:"updated_at"`
+	User            UserJSON         `json:"user"`
+}
+
+type BuildDescription struct {
+	AppID           string
+	Buildpacks      *[]Buildpack
+	CreatedAt       time.Time
+	ID              string
+	OutputStreamURL string
+	Release         *Release
+	Slug            *Slug
+	SourceBlob      SourceBlob
+	Stack           string
+	Status          string
+	UpdatedAt       time.Time
+	User            User
+}
+
+type ConfigVarsDescription struct {
+	AppName   string
+	Variables map[string]interface{}
+}
+
+type SNIEndpointJSON struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type SNIEndpoint struct {
+	ID   string
+	Name string
+}
+
+type DomainJSON struct {
+	ACMStatus       *string          `json:"acm_status"`
+	ACMStatusReason *string          `json:"acm_status_reason"`
+	AppID           string           `json:"app_id"`
+	AppName         string           `json:"app_name"`
+	CName           *string          `json:"cname"`
+	CreatedAt       time.Time        `json:"created_at"`
+	Hostname        string           `json:"hostname"`
+	ID              string           `json:"id"`
+	Kind            string           `json:"kind"`
+	SNIEndpoint     *SNIEndpointJSON `json:"sni_endpoint"`
+	Status          string           `json:"status"`
+	UpdatedAt       time.Time        `json:"updated_at"`
+}
+
+type DomainDescription struct {
+	ACMStatus       *string
+	ACMStatusReason *string
+	AppID           string
+	AppName         string
+	CName           *string
+	CreatedAt       time.Time
+	Hostname        string
+	ID              string
+	Kind            string
+	SNIEndpoint     *SNIEndpoint
+	Status          string
+	UpdatedAt       time.Time
+}
+
+type DynoReleaseJSON struct {
+	ID      string `json:"id"`
+	Version int    `json:"version"`
+}
+
+type DynoRelease struct {
+	ID      string
+	Version int
+}
+
+type DynoJSON struct {
+	AppID     string          `json:"app_id"`
+	AppName   string          `json:"app_name"`
+	AttachURL *string         `json:"attach_url"`
+	Command   string          `json:"command"`
+	CreatedAt time.Time       `json:"created_at"`
+	ID        string          `json:"id"`
+	Name      string          `json:"name"`
+	Release   DynoReleaseJSON `json:"release"`
+	Size      string          `json:"size"`
+	State     string          `json:"state"`
+	Type      string          `json:"type"`
+	UpdatedAt time.Time       `json:"updated_at"`
+}
+
+type DynoDescription struct {
+	AppID     string
+	AppName   string
+	AttachURL *string
+	Command   string
+	CreatedAt time.Time
+	ID        string
+	Name      string
+	Release   DynoRelease
+	Size      string
+	State     string
+	Type      string
+	UpdatedAt time.Time
+}
+
+type GenerationJSON struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type Generation struct {
+	ID   string
+	Name string
+}
+
+type DynoSizeJSON struct {
+	Architecture     string         `json:"architecture"`
+	Compute          int            `json:"compute"`
+	Cost             any            `json:"cost"`
+	Dedicated        bool           `json:"dedicated"`
+	Generation       GenerationJSON `json:"generation"`
+	ID               string         `json:"id"`
+	Memory           float64        `json:"memory"`
+	Name             string         `json:"name"`
+	PreciseDynoUnits float64        `json:"precise_dyno_units"`
+	PrivateSpaceOnly bool           `json:"private_space_only"`
+}
+
+type DynoSizeDescription struct {
+	Architecture     string
+	Compute          int
+	Cost             any
+	Dedicated        bool
+	Generation       Generation
+	ID               string
+	Memory           float64
+	Name             string
+	PreciseDynoUnits float64
+	PrivateSpaceOnly bool
+}

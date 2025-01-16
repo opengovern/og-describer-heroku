@@ -9,7 +9,7 @@ import (
 	resilientbridge "github.com/opengovern/resilient-bridge"
 )
 
-func ListAccounts(ctx context.Context, handler *resilientbridge.ResilientBridge, stream *models.StreamSender) ([]models.Resource, error) {
+func ListAccounts(ctx context.Context, handler *resilientbridge.ResilientBridge, appName string, stream *models.StreamSender) ([]models.Resource, error) {
 	values, err := processAccounts(ctx, handler, stream)
 	if err != nil {
 		return nil, err

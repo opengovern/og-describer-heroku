@@ -16,7 +16,15 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			Schema:      essdk.ConfigSchema(),
 		},
 		DefaultTransform: transform.FromCamel(),
-		TableMap:         map[string]*plugin.Table{},
+		TableMap: map[string]*plugin.Table{
+			"heroku_account":     tableHerokuAccount(ctx),
+			"heroku_app":         tableHerokuApp(ctx),
+			"heroku_build":       tableHerokuBuild(ctx),
+			"heroku_config_vars": tableHerokuConfigVars(ctx),
+			"heroku_domain":      tableHerokuDomain(ctx),
+			"heroku_dyno":        tableHerokuDyno(ctx),
+			"heroku_dyno_size":   tableHerokuDynoSize(ctx),
+		},
 	}
 	for key, table := range p.TableMap {
 		if table == nil {
