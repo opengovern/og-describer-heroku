@@ -1,0 +1,51 @@
+[
+  {
+    "ResourceName": "Heroku/Account",
+    "ListDescriber": "DescribeListByHeroku(describer.ListAccounts)",
+    "GetDescriber": "",
+    "SteampipeTable": "heroku_account",
+    "Model": "Account"
+  },
+  {
+    "ResourceName": "Heroku/App",
+    "ListDescriber": "DescribeListByHeroku(describer.ListApps)",
+    "GetDescriber": "DescribeSingleByHeroku(describer.GetApp)",
+    "SteampipeTable": "heroku_app",
+    "Model": "App"
+  },
+  {
+    "ResourceName": "Heroku/Build",
+    "ListDescriber": "DescribeListByHeroku(describer.ListBuilds)",
+    "GetDescriber": "DescribeSingleByHeroku(describer.GetBuild)",
+    "SteampipeTable": "heroku_build",
+    "Model": "Build"
+  },
+  {
+    "ResourceName": "Heroku/ConfigVars",
+    "ListDescriber": "DescribeListByHeroku(describer.ListConfigVars)",
+    "GetDescriber": "",
+    "SteampipeTable": "heroku_config_vars",
+    "Model": "ConfigVars"
+  },
+  {
+    "ResourceName": "Heroku/Domain",
+    "ListDescriber": "DescribeListByHeroku(describer.ListDomains)",
+    "GetDescriber": "DescribeSingleByHeroku(describer.GetDomain)",
+    "SteampipeTable": "heroku_domain",
+    "Model": "Domain"
+  },
+  {
+    "ResourceName": "Heroku/Dyno",
+    "ListDescriber": "DescribeListByHeroku(describer.ListDynos)",
+    "GetDescriber": "DescribeSingleByHeroku(describer.GetDyno)",
+    "SteampipeTable": "heroku_dyno",
+    "Model": "Dyno"
+  },
+  {
+    "ResourceName": "Heroku/Dyno/Size",
+    "ListDescriber": "DescribeListByHeroku(describer.ListDynoSizes)",
+    "GetDescriber": "DescribeSingleByHeroku(describer.GetDynoSize)",
+    "SteampipeTable": "heroku_dyno_size",
+    "Model": "DynoSize"
+  }
+]

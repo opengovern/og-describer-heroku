@@ -36,7 +36,7 @@ import "github.com/opengovern/og-util/pkg/integration"
 const (
 	IntegrationTypeLower = "integrationType"                    // example: aws, azure
 	IntegrationName      = integration.Type("INTEGRATION_NAME") // example: AWS_ACCOUNT, AZURE_SUBSCRIPTION
-	OGPluginRepoURL      = "repo-url"                           // example: github.com/opengovern/og-describer-aws
+	OGPluginRepoURL      = "repo-url"                           // example: github.com/opengovern/og-describers-aws
 )
 
 ```
@@ -116,7 +116,7 @@ go run pkg/sdk/runable/steampipe_index_map/main.go
 
 ## 6. Test the describer
 
-First you nedd to add credentials to the [describer.go](./command/cmd/describer.go).
+First you nedd to add credentials to the [describer.go](provider/command/cmd/describer.go).
 Then you can run the describer with the following command:
 
 ```bash
