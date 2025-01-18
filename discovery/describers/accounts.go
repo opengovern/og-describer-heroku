@@ -45,33 +45,51 @@ func processAccounts(ctx context.Context, handler *resilientbridge.ResilientBrid
 	if account.Name != nil {
 		name = *account.Name
 	}
-	organization := provider.Organization{
-		ID:   account.DefaultOrganization.ID,
-		Name: account.DefaultOrganization.Name,
+	var organization provider.Organization
+	if account.DefaultOrganization != nil {
+		organization = provider.Organization{
+			ID:   account.DefaultOrganization.ID,
+			Name: account.DefaultOrganization.Name,
+		}
 	}
-	team := provider.Organization{
-		ID:   account.DefaultTeam.ID,
-		Name: account.DefaultTeam.Name,
+	var team provider.Organization
+	if account.DefaultTeam != nil {
+		team = provider.Organization{
+			ID:   account.DefaultTeam.ID,
+			Name: account.DefaultTeam.Name,
+		}
 	}
-	identityProviderOwner := provider.IdentityProviderOwner{
-		ID:   account.IdentityProvider.Owner.ID,
-		Name: account.IdentityProvider.Owner.Name,
-		Type: account.IdentityProvider.Owner.Type,
+	var identityProviderOwner provider.IdentityProviderOwner
+	if account.IdentityProvider != nil {
+		identityProviderOwner = provider.IdentityProviderOwner{
+			ID:   account.IdentityProvider.Owner.ID,
+			Name: account.IdentityProvider.Owner.Name,
+			Type: account.IdentityProvider.Owner.Type,
+		}
 	}
-	providerOrganization := provider.Organization{
-		ID:   account.IdentityProvider.Organization.ID,
-		Name: account.IdentityProvider.Organization.Name,
+	var providerOrganization provider.Organization
+	if account.IdentityProvider != nil {
+		providerOrganization = provider.Organization{
+			ID:   account.IdentityProvider.Organization.ID,
+			Name: account.IdentityProvider.Organization.Name,
+		}
 	}
-	providerTeam := provider.Organization{
-		ID:   account.IdentityProvider.Team.ID,
-		Name: account.IdentityProvider.Team.Name,
+	var providerTeam provider.Organization
+	if account.IdentityProvider != nil {
+		providerTeam = provider.Organization{
+			ID:   account.IdentityProvider.Team.ID,
+			Name: account.IdentityProvider.Team.Name,
+		}
 	}
-	identityProvider := provider.IdentityProvider{
-		ID:           account.IdentityProvider.ID,
-		Name:         account.IdentityProvider.Name,
-		Organization: &providerOrganization,
-		Owner:        &identityProviderOwner,
-		Team:         &providerTeam,
+	var identityProvider provider.IdentityProvider
+	if account.IdentityProvider != nil {
+		identityProvider = provider.IdentityProvider{
+			ID:           account.IdentityProvider.ID,
+			Name:         account.IdentityProvider.Name,
+			Organization: &providerOrganization,
+			Owner:        &identityProviderOwner,
+			Team:         &providerTeam,
+		}
 	}
 	value := models.Resource{
 		ID:   account.ID,

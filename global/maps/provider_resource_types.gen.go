@@ -4,13 +4,14 @@ import (
 	"github.com/opengovern/og-describer-heroku/discovery/describers"
 	model "github.com/opengovern/og-describer-heroku/discovery/pkg/models"
 	"github.com/opengovern/og-describer-heroku/discovery/provider"
-	"github.com/opengovern/og-describer-heroku/global"
+	"github.com/opengovern/og-describer-heroku/platform/constants"
+	"github.com/opengovern/og-util/pkg/integration/interfaces"
 )
 
 var ResourceTypes = map[string]model.ResourceType{
 
 	"Heroku/Account": {
-		IntegrationType: global.IntegrationName,
+		IntegrationType: constants.IntegrationName,
 		ResourceName:    "Heroku/Account",
 		Tags:            map[string][]string{},
 		Labels:          map[string]string{},
@@ -20,7 +21,7 @@ var ResourceTypes = map[string]model.ResourceType{
 	},
 
 	"Heroku/App": {
-		IntegrationType: global.IntegrationName,
+		IntegrationType: constants.IntegrationName,
 		ResourceName:    "Heroku/App",
 		Tags:            map[string][]string{},
 		Labels:          map[string]string{},
@@ -30,7 +31,7 @@ var ResourceTypes = map[string]model.ResourceType{
 	},
 
 	"Heroku/Build": {
-		IntegrationType: global.IntegrationName,
+		IntegrationType: constants.IntegrationName,
 		ResourceName:    "Heroku/Build",
 		Tags:            map[string][]string{},
 		Labels:          map[string]string{},
@@ -40,7 +41,7 @@ var ResourceTypes = map[string]model.ResourceType{
 	},
 
 	"Heroku/ConfigVars": {
-		IntegrationType: global.IntegrationName,
+		IntegrationType: constants.IntegrationName,
 		ResourceName:    "Heroku/ConfigVars",
 		Tags:            map[string][]string{},
 		Labels:          map[string]string{},
@@ -50,7 +51,7 @@ var ResourceTypes = map[string]model.ResourceType{
 	},
 
 	"Heroku/Domain": {
-		IntegrationType: global.IntegrationName,
+		IntegrationType: constants.IntegrationName,
 		ResourceName:    "Heroku/Domain",
 		Tags:            map[string][]string{},
 		Labels:          map[string]string{},
@@ -60,7 +61,7 @@ var ResourceTypes = map[string]model.ResourceType{
 	},
 
 	"Heroku/Dyno": {
-		IntegrationType: global.IntegrationName,
+		IntegrationType: constants.IntegrationName,
 		ResourceName:    "Heroku/Dyno",
 		Tags:            map[string][]string{},
 		Labels:          map[string]string{},
@@ -70,7 +71,7 @@ var ResourceTypes = map[string]model.ResourceType{
 	},
 
 	"Heroku/Dyno/Size": {
-		IntegrationType: global.IntegrationName,
+		IntegrationType: constants.IntegrationName,
 		ResourceName:    "Heroku/Dyno/Size",
 		Tags:            map[string][]string{},
 		Labels:          map[string]string{},
@@ -78,4 +79,59 @@ var ResourceTypes = map[string]model.ResourceType{
 		ListDescriber:   provider.DescribeListByHeroku(describers.ListDynoSizes),
 		GetDescriber:    provider.DescribeSingleByHeroku(describers.GetDynoSize),
 	},
+}
+
+var ResourceTypeConfigs = map[string]*interfaces.ResourceTypeConfiguration{
+
+	"Heroku/Account": {
+		Name:            "Heroku/Account",
+		IntegrationType: constants.IntegrationName,
+		Description:     "",
+	},
+
+	"Heroku/App": {
+		Name:            "Heroku/App",
+		IntegrationType: constants.IntegrationName,
+		Description:     "",
+	},
+
+	"Heroku/Build": {
+		Name:            "Heroku/Build",
+		IntegrationType: constants.IntegrationName,
+		Description:     "",
+	},
+
+	"Heroku/ConfigVars": {
+		Name:            "Heroku/ConfigVars",
+		IntegrationType: constants.IntegrationName,
+		Description:     "",
+	},
+
+	"Heroku/Domain": {
+		Name:            "Heroku/Domain",
+		IntegrationType: constants.IntegrationName,
+		Description:     "",
+	},
+
+	"Heroku/Dyno": {
+		Name:            "Heroku/Dyno",
+		IntegrationType: constants.IntegrationName,
+		Description:     "",
+	},
+
+	"Heroku/Dyno/Size": {
+		Name:            "Heroku/Dyno/Size",
+		IntegrationType: constants.IntegrationName,
+		Description:     "",
+	},
+}
+
+var ResourceTypesList = []string{
+	"Heroku/Account",
+	"Heroku/App",
+	"Heroku/Build",
+	"Heroku/ConfigVars",
+	"Heroku/Domain",
+	"Heroku/Dyno",
+	"Heroku/Dyno/Size",
 }

@@ -12,10 +12,10 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "run",
-	Short: "OpenGovernance heroku describers manual",
+	Short: "OpenGovernance temaplte describer manual",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var items []string
-		items = append(items, "describers")
+		items = append(items, "describer")
 
 		return describerCmd.Help()
 

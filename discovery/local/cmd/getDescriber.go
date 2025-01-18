@@ -21,6 +21,8 @@ import (
 
 var (
 	resourceID string
+	Token      = os.Getenv("TOKEN")    //example credes
+	AppName    = os.Getenv("APP_NAME") // example parameter
 )
 
 // getDescriberCmd represents the describer command
@@ -36,21 +38,25 @@ var getDescriberCmd = &cobra.Command{
 		defer file.Close() // Ensure the file is closed at the end
 
 		job := describe.DescribeJob{
-			JobID:                  uint(uuid.New().ID()),
-			ResourceType:           resourceType,
-			IntegrationID:          "",
-			ProviderID:             "",
-			DescribedAt:            time.Now().UnixMilli(),
-			IntegrationType:        global.IntegrationTypeLower,
-			CipherText:             "",
-			IntegrationLabels:      map[string]string{},
+			JobID:           uint(uuid.New().ID()),
+			ResourceType:    resourceType,
+			IntegrationID:   "",
+			ProviderID:      "",
+			DescribedAt:     time.Now().UnixMilli(),
+			IntegrationType: global.IntegrationTypeLower,
+			CipherText:      "",
+			IntegrationLabels: map[string]string{
+				"AppName": AppName, // example parameter
+			},
 			IntegrationAnnotations: nil,
 		}
 
 		ctx := context.Background()
 		logger, _ := zap.NewProduction()
 
-		creds, err := provider.AccountCredentialsFromMap(map[string]any{})
+		creds, err := provider.AccountCredentialsFromMap(map[string]any{
+			"token": Token,
+		})
 		if err != nil {
 			return fmt.Errorf(" account credentials: %w", err)
 		}

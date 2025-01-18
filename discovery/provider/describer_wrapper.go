@@ -2,7 +2,6 @@ package provider
 
 import (
 	"errors"
-	"github.com/opengovern/og-describer-heroku/discovery/describers"
 	"github.com/opengovern/og-describer-heroku/discovery/pkg/models"
 	"github.com/opengovern/og-util/pkg/describe/enums"
 	resilientbridge "github.com/opengovern/resilient-bridge"
@@ -14,7 +13,7 @@ import (
 // DescribeListByHeroku A wrapper to pass Heroku authorization to describers functions
 func DescribeListByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, *models.StreamSender) ([]models.Resource, error)) models.ResourceDescriber {
 	return func(ctx context.Context, cfg models.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, stream *models.StreamSender) ([]models.Resource, error) {
-		ctx = describers.WithTriggerType(ctx, triggerType)
+		ctx = WithTriggerType(ctx, triggerType)
 
 		var err error
 		// Check for the token
@@ -28,7 +27,7 @@ func DescribeListByHeroku(describe func(context.Context, *resilientbridge.Resili
 		restWindowSecs := int64(60)
 
 		// Register TailScale provider
-		resilientBridge.RegisterProvider("heroku", &adapters.DopplerAdapter{APIToken: cfg.Token}, &resilientbridge.ProviderConfig{
+		resilientBridge.RegisterProvider("heroku", &adapters.HerokuAdapter{APIToken: cfg.Token}, &resilientbridge.ProviderConfig{
 			UseProviderLimits:   true,
 			MaxRequestsOverride: &restMaxRequests,
 			WindowSecsOverride:  &restWindowSecs,
@@ -51,7 +50,7 @@ func DescribeListByHeroku(describe func(context.Context, *resilientbridge.Resili
 // DescribeSingleByHeroku A wrapper to pass Heroku authorization to describers functions
 func DescribeSingleByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, string) (*models.Resource, error)) models.SingleResourceDescriber {
 	return func(ctx context.Context, cfg models.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, resourceID string, stream *models.StreamSender) (*models.Resource, error) {
-		ctx = describers.WithTriggerType(ctx, triggerType)
+		ctx = WithTriggerType(ctx, triggerType)
 
 		var err error
 		// Check for the token
@@ -65,7 +64,7 @@ func DescribeSingleByHeroku(describe func(context.Context, *resilientbridge.Resi
 		restWindowSecs := int64(60)
 
 		// Register TailScale provider
-		resilientBridge.RegisterProvider("heroku", &adapters.DopplerAdapter{APIToken: cfg.Token}, &resilientbridge.ProviderConfig{
+		resilientBridge.RegisterProvider("heroku", &adapters.HerokuAdapter{APIToken: cfg.Token}, &resilientbridge.ProviderConfig{
 			UseProviderLimits:   true,
 			MaxRequestsOverride: &restMaxRequests,
 			WindowSecsOverride:  &restWindowSecs,

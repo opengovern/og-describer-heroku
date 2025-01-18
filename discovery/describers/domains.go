@@ -49,9 +49,12 @@ func GetDomain(ctx context.Context, handler *resilientbridge.ResilientBridge, ap
 	if err != nil {
 		return nil, err
 	}
-	sniEndpoint := provider.SNIEndpoint{
-		ID:   domain.SNIEndpoint.ID,
-		Name: domain.SNIEndpoint.Name,
+	var sniEndpoint provider.SNIEndpoint
+	if domain.SNIEndpoint != nil {
+		sniEndpoint = provider.SNIEndpoint{
+			ID:   domain.SNIEndpoint.ID,
+			Name: domain.SNIEndpoint.Name,
+		}
 	}
 	value := models.Resource{
 		ID:   domain.ID,
@@ -102,9 +105,12 @@ func processDomains(ctx context.Context, handler *resilientbridge.ResilientBridg
 		wg.Add(1)
 		go func(domain provider.DomainJSON) {
 			defer wg.Done()
-			sniEndpoint := provider.SNIEndpoint{
-				ID:   domain.SNIEndpoint.ID,
-				Name: domain.SNIEndpoint.Name,
+			var sniEndpoint provider.SNIEndpoint
+			if domain.SNIEndpoint != nil {
+				sniEndpoint = provider.SNIEndpoint{
+					ID:   domain.SNIEndpoint.ID,
+					Name: domain.SNIEndpoint.Name,
+				}
 			}
 			value := models.Resource{
 				ID:   domain.ID,

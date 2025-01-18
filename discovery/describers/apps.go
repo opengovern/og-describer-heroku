@@ -57,9 +57,12 @@ func GetApp(ctx context.Context, handler *resilientbridge.ResilientBridge, appNa
 		ID:   app.Generation.ID,
 		Name: app.Generation.Name,
 	}
-	organization := provider.Organization{
-		ID:   app.Organization.ID,
-		Name: app.Organization.Name,
+	var organization provider.Organization
+	if app.Organization != nil {
+		organization = provider.Organization{
+			ID:   app.Organization.ID,
+			Name: app.Organization.Name,
+		}
 	}
 	owner := provider.Owner{
 		Email: app.Owner.Email,
@@ -69,18 +72,24 @@ func GetApp(ctx context.Context, handler *resilientbridge.ResilientBridge, appNa
 		ID:   app.Region.ID,
 		Name: app.Region.Name,
 	}
-	space := provider.Space{
-		ID:     app.Space.ID,
-		Name:   app.Space.Name,
-		Shield: app.Space.Shield,
+	var space provider.Space
+	if app.Space != nil {
+		space = provider.Space{
+			ID:     app.Space.ID,
+			Name:   app.Space.Name,
+			Shield: app.Space.Shield,
+		}
 	}
 	stack := provider.Stack{
 		ID:   app.Stack.ID,
 		Name: app.Stack.Name,
 	}
-	team := provider.Organization{
-		ID:   app.Team.ID,
-		Name: app.Team.Name,
+	var team provider.Organization
+	if app.Team != nil {
+		team = provider.Organization{
+			ID:   app.Team.ID,
+			Name: app.Team.Name,
+		}
 	}
 	value := models.Resource{
 		ID:   app.ID,
@@ -147,9 +156,12 @@ func processApps(ctx context.Context, handler *resilientbridge.ResilientBridge, 
 				ID:   app.Generation.ID,
 				Name: app.Generation.Name,
 			}
-			organization := provider.Organization{
-				ID:   app.Organization.ID,
-				Name: app.Organization.Name,
+			var organization provider.Organization
+			if app.Organization != nil {
+				organization = provider.Organization{
+					ID:   app.Organization.ID,
+					Name: app.Organization.Name,
+				}
 			}
 			owner := provider.Owner{
 				Email: app.Owner.Email,
@@ -159,18 +171,24 @@ func processApps(ctx context.Context, handler *resilientbridge.ResilientBridge, 
 				ID:   app.Region.ID,
 				Name: app.Region.Name,
 			}
-			space := provider.Space{
-				ID:     app.Space.ID,
-				Name:   app.Space.Name,
-				Shield: app.Space.Shield,
+			var space provider.Space
+			if app.Space != nil {
+				space = provider.Space{
+					ID:     app.Space.ID,
+					Name:   app.Space.Name,
+					Shield: app.Space.Shield,
+				}
 			}
 			stack := provider.Stack{
 				ID:   app.Stack.ID,
 				Name: app.Stack.Name,
 			}
-			team := provider.Organization{
-				ID:   app.Team.ID,
-				Name: app.Team.Name,
+			var team provider.Organization
+			if app.Team != nil {
+				team = provider.Organization{
+					ID:   app.Team.ID,
+					Name: app.Team.Name,
+				}
 			}
 			value := models.Resource{
 				ID:   app.ID,

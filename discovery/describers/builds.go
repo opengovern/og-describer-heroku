@@ -58,11 +58,17 @@ func GetBuild(ctx context.Context, handler *resilientbridge.ResilientBridge, app
 			})
 		}
 	}
-	release := provider.Release{
-		ID: build.Release.ID,
+	var release provider.Release
+	if build.Release != nil {
+		release = provider.Release{
+			ID: build.Release.ID,
+		}
 	}
-	slug := provider.Slug{
-		ID: build.Slug.ID,
+	var slug provider.Slug
+	if build.Slug != nil {
+		slug = provider.Slug{
+			ID: build.Slug.ID,
+		}
 	}
 	sourceBlob := provider.SourceBlob{
 		Checksum:           build.SourceBlob.Checksum,
@@ -132,11 +138,17 @@ func processBuilds(ctx context.Context, handler *resilientbridge.ResilientBridge
 					})
 				}
 			}
-			release := provider.Release{
-				ID: build.Release.ID,
+			var release provider.Release
+			if build.Release != nil {
+				release = provider.Release{
+					ID: build.Release.ID,
+				}
 			}
-			slug := provider.Slug{
-				ID: build.Slug.ID,
+			var slug provider.Slug
+			if build.Slug != nil {
+				slug = provider.Slug{
+					ID: build.Slug.ID,
+				}
 			}
 			sourceBlob := provider.SourceBlob{
 				Checksum:           build.SourceBlob.Checksum,

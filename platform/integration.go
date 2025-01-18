@@ -2,16 +2,17 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/opengovern/og-describer-template/platform/constants"
-	"github.com/opengovern/og-describer-template/global"
-	"github.com/opengovern/og-describer-template/global/maps"
+	"github.com/jackc/pgtype"
+	"github.com/opengovern/og-describer-heroku/global"
+	"github.com/opengovern/og-describer-heroku/global/maps"
+	"github.com/opengovern/og-describer-heroku/platform/constants"
 	"github.com/opengovern/og-util/pkg/integration"
 	"github.com/opengovern/og-util/pkg/integration/interfaces"
 )
 
 type Integration struct{}
 
-func (i *Integration) GetConfiguration() interfaces.IntegrationConfiguration {
+func (i *Integration) GetConfiguration() (interfaces.IntegrationConfiguration, error) {
 	return interfaces.IntegrationConfiguration{
 		NatsScheduledJobsTopic:   global.JobQueueTopic,
 		NatsManualJobsTopic:      global.JobQueueTopicManuals,
@@ -19,7 +20,7 @@ func (i *Integration) GetConfiguration() interfaces.IntegrationConfiguration {
 		NatsConsumerGroup:        global.ConsumerGroup,
 		NatsConsumerGroupManuals: global.ConsumerGroupManuals,
 
-		SteampipePluginName: "template",
+		SteampipePluginName: "heroku",
 
 		UISpec:   constants.UISpec,
 		Manifest: constants.Manifest,
@@ -27,7 +28,7 @@ func (i *Integration) GetConfiguration() interfaces.IntegrationConfiguration {
 
 		DescriberDeploymentName: constants.DescriberDeploymentName,
 		DescriberRunCommand:     constants.DescriberRunCommand,
-	}
+	}, nil
 }
 
 func (i *Integration) HealthCheck(jsonData []byte, providerId string, labels map[string]string, annotations map[string]string) (bool, error) {
@@ -36,10 +37,15 @@ func (i *Integration) HealthCheck(jsonData []byte, providerId string, labels map
 	if err != nil {
 		return false, err
 	}
-	// TODO add credentials
-	isHealthy, err := IntegrationHealthcheck(Config{
+	var appName string
+	if v, ok := labels["AppName"]; ok {
+		appName = v
+	}
+	isHealthy, err := HerokuIntegrationHealthcheck(ConfigHealthCheck{
+		Token:   credentials.Token,
+		AppName: appName,
 	})
-	
+
 	return isHealthy, err
 }
 
@@ -50,10 +56,29 @@ func (i *Integration) DiscoverIntegrations(jsonData []byte) ([]integration.Integ
 		return nil, err
 	}
 	var integrations []integration.Integration
-	// TODO
-	_, err = IntegrationDiscovery(Config{
+	apps, err := HerokuIntegrationDiscovery(ConfigDiscovery{
+		Token: credentials.Token,
 	})
-	
+	for _, app := range apps {
+		labels := map[string]string{
+			"AppName": app.Name,
+		}
+		labelsJsonData, err := json.Marshal(labels)
+		if err != nil {
+			return nil, err
+		}
+		integrationLabelsJsonb := pgtype.JSONB{}
+		err = integrationLabelsJsonb.Set(labelsJsonData)
+		if err != nil {
+			return nil, err
+		}
+		integrations = append(integrations, integration.Integration{
+			ProviderID: app.ID,
+			Name:       app.Name,
+			Labels:     integrationLabelsJsonb,
+		})
+	}
+
 	return integrations, nil
 }
 
@@ -69,19 +94,19 @@ func (i *Integration) GetResourceTypesByLabels(labels map[string]string) (map[st
 	return resourceTypesMap, nil
 }
 
-func (i *Integration) GetResourceTypeFromTableName(tableName string) string {
+func (i *Integration) GetResourceTypeFromTableName(tableName string) (string, error) {
 	if v, ok := maps.TablesToResourceTypes[tableName]; ok {
-		return v
+		return v, nil
 	}
 
-	return ""
+	return "", nil
 }
 
-func (i *Integration) GetIntegrationType() integration.Type {
-	return constants.IntegrationName
+func (i *Integration) GetIntegrationType() (integration.Type, error) {
+	return constants.IntegrationName, nil
 }
 
-func (i *Integration) ListAllTables() map[string][]interfaces.CloudQLColumn {
+func (i *Integration) ListAllTables() (map[string][]interfaces.CloudQLColumn, error) {
 	plugin := global.Plugin()
 	tables := make(map[string][]interfaces.CloudQLColumn)
 	for tableKey, table := range plugin.TableMap {
@@ -92,5 +117,9 @@ func (i *Integration) ListAllTables() map[string][]interfaces.CloudQLColumn {
 		tables[tableKey] = columns
 	}
 
-	return tables
+	return tables, nil
+}
+
+func (i *Integration) Ping() error {
+	return nil
 }
