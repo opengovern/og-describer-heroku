@@ -3,7 +3,7 @@ package provider
 import (
 	"errors"
 	"github.com/opengovern/og-describer-heroku/discovery/describers"
-	models2 "github.com/opengovern/og-describer-heroku/discovery/pkg/models"
+	"github.com/opengovern/og-describer-heroku/discovery/pkg/models"
 	"github.com/opengovern/og-util/pkg/describe/enums"
 	resilientbridge "github.com/opengovern/resilient-bridge"
 	"github.com/opengovern/resilient-bridge/adapters"
@@ -12,8 +12,8 @@ import (
 )
 
 // DescribeListByHeroku A wrapper to pass Heroku authorization to describers functions
-func DescribeListByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, *models2.StreamSender) ([]models2.Resource, error)) models2.ResourceDescriber {
-	return func(ctx context.Context, cfg models2.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, stream *models2.StreamSender) ([]models2.Resource, error) {
+func DescribeListByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, *models.StreamSender) ([]models.Resource, error)) models.ResourceDescriber {
+	return func(ctx context.Context, cfg models.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, stream *models.StreamSender) ([]models.Resource, error) {
 		ctx = describers.WithTriggerType(ctx, triggerType)
 
 		var err error
@@ -38,7 +38,7 @@ func DescribeListByHeroku(describe func(context.Context, *resilientbridge.Resili
 
 		appName := additionalParameters["AppName"]
 		// Get values from describers
-		var values []models2.Resource
+		var values []models.Resource
 		result, err := describe(ctx, resilientBridge, appName, stream)
 		if err != nil {
 			return nil, err
@@ -49,8 +49,8 @@ func DescribeListByHeroku(describe func(context.Context, *resilientbridge.Resili
 }
 
 // DescribeSingleByHeroku A wrapper to pass Heroku authorization to describers functions
-func DescribeSingleByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, string) (*models2.Resource, error)) models2.SingleResourceDescriber {
-	return func(ctx context.Context, cfg models2.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, resourceID string) (*models2.Resource, error) {
+func DescribeSingleByHeroku(describe func(context.Context, *resilientbridge.ResilientBridge, string, string) (*models.Resource, error)) models.SingleResourceDescriber {
+	return func(ctx context.Context, cfg models.IntegrationCredentials, triggerType enums.DescribeTriggerType, additionalParameters map[string]string, resourceID string, stream *models.StreamSender) (*models.Resource, error) {
 		ctx = describers.WithTriggerType(ctx, triggerType)
 
 		var err error
