@@ -30,6 +30,7 @@ func Discover(token string) ([]App, error) {
 		return nil, err
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+	req.Header.Set("Accept", "application/vnd.heroku+json; version=3")
 
 	resp, err := client.Do(req)
 	if err != nil {
