@@ -46,7 +46,7 @@ var getDescriberCmd = &cobra.Command{
 			IntegrationType: global.IntegrationTypeLower,
 			CipherText:      "",
 			IntegrationLabels: map[string]string{
-				"AppName": AppName, // example parameter
+				"AppName": Token, // example parameter
 			},
 			IntegrationAnnotations: nil,
 		}
